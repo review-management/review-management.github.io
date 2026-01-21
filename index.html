@@ -3,18 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Documentation | Reviewer Group Enforcer</title>
+    <title>Documentation | Reviewer Group Management</title>
     <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
+
 <body>
     <nav class="navbar">
         <div class="container">
-            <span class="logo">Reviewer Group Enforcer</span>
+            <span class="logo">Reviewer Group Management</span>
             <div class="nav-links">
                 <a href="#setup">Setup Guide</a>
+                <a href="#requirements">Requirements</a>
                 <a href="#privacy">Privacy</a>
             </div>
         </div>
@@ -23,7 +25,7 @@
     <header class="hero">
         <div class="container">
             <h1>Enforce Granular Code Reviews</h1>
-            <p>Ensure the right people approve your code by creating custom reviewer groups with specific approval minimums.</p>
+            <p>Streamline your workflow with custom reviewer groups and automated merge checks that enforce the exact approval requirements you need.</p>
             <div class="badge-premium">Requires Bitbucket Premium</div>
         </div>
     </header>
@@ -31,44 +33,68 @@
     <main class="container">
         <section id="setup">
             <h2>Getting Started</h2>
-            <p>Follow these steps to configure your repository gates:</p>
-            
+            <p>Follow these simple steps to configure your repository to use the review group system:</p>
+
             <div class="card-grid">
                 <div class="card">
                     <div class="step-number">1</div>
-                    <h3>Create Groups</h3>
-                    <p>Open the app in your repository settings. Use the "Create New Group" section to define groups like "Architecture," "QA," or "Security."</p>
+                    <h3>Create Approval Groups</h3>
+                    <p>Open the app in repository settings. Define groups like "Senior Developer", "Junior Developer", "DevOps", "QA" etc.</p>
                 </div>
                 <div class="card">
                     <div class="step-number">2</div>
-                    <h3>Set Minimums</h3>
-                    <p>For each group, define exactly how many approvals are required. For example, you might require 2 approvals from "Senior Devs" and 1 from "DevOps."</p>
+                    <h3>Set Minimum Approvals</h3>
+                    <p>Define required approvals. e.g., 2 from "Senior Developer" and 1 from "DevOps."</p>
                 </div>
                 <div class="card">
                     <div class="step-number">3</div>
                     <h3>Assign Users</h3>
-                    <p>Search through your workspace members or default reviewers and assign them to their respective groups via the dropdown menus.</p>
+                    <p>Search workspace members and assign them to groups via dropdown menus.</p>
+                </div>
+                <div class="card">
+                    <div class="step-number">4</div>
+                    <h3>Activate Merge Check</h3>
+                    <p>Add "Reviewer Group Enforcer" under the "Custom Merge Checks" section of the repository settings.</p>
                 </div>
             </div>
 
             <div class="info-box">
-                <strong>How it works:</strong> When a user attempts to merge a Pull Request, our custom merge check scans the current approvers. If any group hasn't met its minimum requirement, the merge is blocked until the right people sign off.
+                <strong>How it works:</strong> When a merge is attempted, the app scans approvers. If any group hasn't met its requirement, the merge is blocked.
             </div>
+                        <div class="sample-image card">
+                <img src="./sample.PNG" alt="Sample Configuration Page Screenshot">
+            </div>
+        </section>
+
+        <hr>
+
+        <section id="requirements">
+            <h2>Requirements</h2>
+            <ul>
+                <li><strong>Bitbucket Premium:</strong> This app requires custom merge checks, which are only available in Bitbucket Premium.</li>
+            </ul>
         </section>
 
         <hr>
 
         <section id="privacy">
             <h2>Privacy & Data Security</h2>
-            <p>Your security is our priority. This application is built on <strong>Atlassian Forge</strong>, meaning your data stays within the Atlassian ecosystem.</p>
+            <p>Your security is our priority. This application is built on <strong>Atlassian Forge</strong>.</p>
             <div class="privacy-statement">
-                <p>"We store Bitbucket Account IDs and group configurations within Atlassian's Forge Storage. No data is transmitted to or stored on external servers."</p>
+                <p>"We store Bitbucket Account IDs and configurations within Atlassian Forge Storage. No data is transmitted to external servers."</p>
             </div>
-            <ul>
-                <li><strong>Data Localization:</strong> All configuration data is stored in Atlassian's secure Forge Storage.</li>
-                <li><strong>No External API calls:</strong> The app does not communicate with any third-party analytics or tracking services.</li>
-                <li><strong>Identity:</strong> We only reference Atlassian Account IDs to verify group membership during the merge process.</li>
-            </ul>
+            
+            <code>
+                <pre>
+permissions:
+  scopes:
+    - storage:app
+    - read:pullrequest:bitbucket
+    - read:workspace:bitbucket
+    - read:repository:bitbucket
+    - read:user:bitbucket
+                </pre>
+            </code>
         </section>
     </main>
 
